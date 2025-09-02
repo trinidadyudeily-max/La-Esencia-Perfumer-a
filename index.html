@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo de Perfumes | Tu Marca</title>
+  <meta name="description" content="Catálogo digital de perfumes: elegancia y aromas exóticos. Compra por WhatsApp.">
+  <style>
+    :root{
+      --bg:#0f0f10; /* negro suave */
+      --card:#151517; /* gris carbón */
+      --text:#f7f7f7;
+      --muted:#b7b7b9;
+      --brand:#d2b48c; /* dorado suave/tan */
+      --accent:#e7d8bd; /* dorado claro */
+      --ring: rgba(210,180,140,.4);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    a{color:inherit;text-decoration:none}
+    header{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:saturate(180%) blur(8px);
+      background:linear-gradient(180deg, rgba(21,21,23,.9), rgba(21,21,23,.5));
+      border-bottom:1px solid rgba(231,216,189,.08);
+    }
+    .wrap{max-width:1120px;margin:0 auto;padding:20px}
+    .nav{display:flex;align-items:center;gap:14px;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--accent));box-shadow:inset 0 0 0 2px rgba(0,0,0,.2)}
+    .brand h1{font-size:18px;margin:0;letter-spacing:.5px}
+    .hero{padding:38px 20px 22px;background:radial-gradient(1200px 400px at 50% -120px, rgba(210,180,140,.10), transparent)}
+    .hero h2{font-size:32px;margin:0 0 8px}
+    .hero p{margin:0;color:var(--muted)}
+
+    .toolbar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:18px}
+    .input,.select{background:var(--card);border:1px solid rgba(231,216,189,.14);color:var(--text);padding:12px 14px;border-radius:14px;outline:none}
+    .input:focus,.select:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--ring)}
+    .cta{background:linear-gradient(135deg,var(--brand),var(--accent));color:#141414;border:none;padding:12px 16px;border-radius:14px;font-weight:600;cursor:pointer}
+    .cta:hover{filter:brightness(1.05)}
+
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:26px 0 60px}
+    @media (max-width:1024px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:768px){.grid{grid-template-columns:repeat(2,1fr)} .toolbar{grid-template-columns:1fr}} 
+    @media (max-width:480px){.grid{grid-template-columns:1fr}}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));border:1px solid rgba(231,216,189,.12);border-radius:18px;overflow:hidden;transition:transform .2s ease, box-shadow .2s ease}
+    .card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .media{position:relative;background:#0b0b0c}
+    .media img{display:block;width:100%;height:250px;object-fit:cover}
+    .badge{position:absolute;left:10px;top:10px;background:rgba(210,180,140,.15);color:var(--accent);border:1px solid rgba(231,216,189,.35);padding:6px 10px;border-radius:999px;font-size:12px}
+    .content{padding:14px}
+    .title{font-size:16px;font-weight:700;margin:2px 0}
+    .brandtxt{color:var(--muted);font-size:13px;margin:0 0 6px}
+    .desc{color:#dcdcdc;font-size:14px;line-height:1.35;min-height:42px}
+    .meta{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+    .price{font-weight:800;background:linear-gradient(135deg,var(--accent),#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .btnrow{display:flex;gap:8px;margin-top:12px}
+    .ghost, .whats{flex:1;padding:10px 12px;border-radius:12px;border:1px solid rgba(231,216,189,.22);background:transparent;color:var(--text);cursor:pointer}
+    .whats{border:0;background:linear-gradient(135deg,var(--brand),var(--accent));color:#121212;font-weight:700}
+
+    footer{border-top:1px solid rgba(231,216,189,.10);padding:30px 0;color:var(--muted)}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip{padding:8px 12px;border-radius:999px;border:1px solid rgba(231,216,189,.22);cursor:pointer}
+    .chip.active{background:linear-gradient(135deg,var(--brand),var(--accent));color:#121212;border-color:transparent}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Tu Perfumería</h1>
+      </div>
+      <nav class="links" aria-label="principal">
+        <a href="#catalogo">Catálogo</a> · <a href="#destacados">Destacados</a> · <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="wrap hero" id="inicio">
+    <h2>Descubre la elegancia en cada aroma</h2>
+    <p>Catálogo digital de fragancias originales. Envíos rápidos y asesoría por WhatsApp.</p>
+
+    <div class="toolbar" role="search">
+      <input id="q" class="input" type="search" placeholder="Buscar: Yara, Lattafa, Armani…" aria-label="Buscar perfumes" />
+      <select id="cat" class="select" aria-label="Filtrar por familia olfativa">
+        <option value="">Todas las familias</option>
+        <option>Floral</option>
+        <option>Oriental</option>
+        <option>Amaderada</option>
+        <option>Ámbar</option>
+        <option>Fresca</option>
+        <option>Gourmand</option>
+        <option>Cítrica</option>
+      </select>
+      <select id="sort" class="select" aria-label="Ordenar">
+        <option value="popular">Ordenar: Popular</option>
+        <option value="precio-asc">Precio: menor a mayor</option>
+        <option value="precio-des">Precio: mayor a menor</option>
+        <option value="az">A–Z</option>
+        <option value="za">Z–A</option>
+      </select>
+    </div>
+
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <main class="wrap" id="catalogo">
+    <div class="grid" id="grid" aria-live="polite"></div>
+  </main>
+
+  <footer id="contacto">
+    <div class="wrap">
+      <p><strong>¿Necesitas ayuda eligiendo?</strong> Escríbenos por WhatsApp y te asesoramos.</p>
+      <p>WhatsApp: <a href="#" id="waFoot">+1 809 000 0000</a> · Instagram: @tuperfumeria · Email: ventas@tuperfumeria.com</p>
+      <p style="margin-top:6px">© <span id="y"></span> Tu Perfumería — Fragancias que cuentan historias.</p>
+    </div>
+  </footer>
+
+  <script>
+    // 👉 EDITA TU NÚMERO DE WHATSAPP AQUÍ (solo dígitos, con código de país)
+    const WHATS = '18090000000';
+
+    // 👉 Catálogo de ejemplo (edítalo o reemplázalo por JSON propio)
+    const PRODUCTS = [
+      {
+        id: 'yara',
+        nombre: 'Yara', marca: 'Lattafa', familia: 'Oriental',
+        desc: 'Elegante con un toque exótico: vainilla cremosa, flores blancas y un fondo envolvente.',
+        precio: 32.99,
+        popular: true,
+        imagen: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop',
+        etiqueta: 'Top ventas'
+      },
+      {
+        id: 'yara-black',
+        nombre: 'Yara Black', marca: 'Lattafa', familia: 'Ámbar',
+        desc: 'Sensual y misteriosa, ideal para noches especiales. Dulce-ámbar con matices especiados.',
+        precio: 34.99,
+        popular: true,
+        imagen: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop',
+        etiqueta: 'Nuevo'
+      },
+      {
+        id: 'club-nuit',
+        nombre: 'Club de Nuit Intense Man', marca: 'Armaf', familia: 'Amaderada',
+        desc: 'Salida cítrica vibrante con corazón ahumado. Proyección potente y gran duración.',
+        precio: 39.90,
+        popular: true,
+        imagen: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1200&auto=format&fit=crop',
+        etiqueta: 'Best value'
+      },
+      {
+        id: 'versace-dylan',
+        nombre: 'Dylan Blue', marca: 'Versace', familia: 'Fresca',
+        desc: 'Acuática y moderna con toques amaderados. Perfecta para uso diario.',
+        precio: 68.00,
+        popular: false,
+        imagen: 'https://images.unsplash.com/photo-1602971242235-8fceea6b7453?q=80&w=1200&auto=format&fit=crop'
+      },
+      {
+        id: 'good-girl',
+        nombre: 'Good Girl', marca: 'Carolina Herrera', familia: 'Gourmand',
+        desc: 'Dulce, adictiva y sofisticada. Ideal para ocasiones especiales.',
+        precio: 96.00,
+        popular: false,
+        imagen: 'https://images.unsplash.com/photo-1520975708797-2f2be0f0a3d0?q=80&w=1200&auto=format&fit=crop'
+      },
+      {
+        id: 'sauvage',
+        nombre: 'Sauvage', marca: 'Dior', familia: 'Cítrica',
+        desc: 'Aroma fresco y vibrante con base amaderada. Versátil y moderno.',
+        precio: 118.00,
+        popular: false,
+        imagen: 'https://images.unsplash.com/photo-1628452965640-5b8f7a5bf058?q=80&w=1200&auto=format&fit=crop'
+      }
+    ];
+
+    const state = { q:'', cat:'', sort:'popular', chips:new Set() };
+
+    const el = (sel)=>document.querySelector(sel);
+    const grid = el('#grid');
+
+    function money(n){ return new Intl.NumberFormat('es-DO',{style:'currency',currency:'DOP'}).format(n*60); }
+
+    function card(p){
+      const waTxt = encodeURIComponent(`Hola, me interesa ${p.nombre} (${p.marca}). ¿Disponibilidad y precio?`);
+      return `
+      <article class="card" data-id="${p.id}">
+        <div class="media">
+          <img loading="lazy" src="${p.imagen}" alt="${p.nombre} de ${p.marca}">
+          ${p.etiqueta?`<span class="badge">${p.etiqueta}</span>`:''}
+        </div>
+        <div class="content">
+          <p class="brandtxt">${p.marca} • ${p.familia}</p>
+          <h3 class="title">${p.nombre}</h3>
+          <p class="desc">${p.desc}</p>
+          <div class="meta">
+            <span class="price">${money(p.precio)}</span>
+            <span aria-label="popularidad" title="${p.popular?'Popular':'Estandar'}">${p.popular?'★':''}</span>
+          </div>
+          <div class="btnrow">
+            <button class="ghost" onclick="copyInfo('${p.nombre}','${p.marca}')">Copiar info</button>
+            <a class="whats" target="_blank" rel="noopener" href="https://wa.me/${WHATS}?text=${waTxt}">WhatsApp</a>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    function render(){
+      const q = state.q.toLowerCase();
+      let list = PRODUCTS.filter(p =>
+        (!q || `${p.nombre} ${p.marca} ${p.familia} ${p.desc}`.toLowerCase().includes(q)) &&
+        (!state.cat || p.familia===state.cat) &&
+        (state.chips.size===0 || state.chips.has(p.marca) || state.chips.has(p.familia))
+      );
+
+      switch(state.sort){
+        case 'precio-asc': list.sort((a,b)=>a.precio-b.precio); break;
+        case 'precio-des': list.sort((a,b)=>b.precio-a.precio); break;
+        case 'az': list.sort((a,b)=>a.nombre.localeCompare(b.nombre)); break;
+        case 'za': list.sort((a,b)=>b.nombre.localeCompare(a.nombre)); break;
+        default: list.sort((a,b)=>Number(b.popular)-Number(a.popular));
+      }
+
+      grid.innerHTML = list.map(card).join('') || `<p>No se encontraron perfumes. Intenta limpiar filtros.</p>`;
+    }
+
+    function buildChips(){
+      const brands = [...new Set(PRODUCTS.map(p=>p.marca))];
+      const fams = [...new Set(PRODUCTS.map(p=>p.familia))];
+      const chips = el('#chips');
+      chips.innerHTML = [...brands, ...fams].map(x => `<button class="chip" data-x="${x}">${x}</button>`).join('');
+      chips.addEventListener('click', e=>{
+        const t = e.target.closest('.chip'); if(!t) return;
+        const val = t.getAttribute('data-x');
+        if(state.chips.has(val)) state.chips.delete(val); else state.chips.add(val);
+        [...chips.children].forEach(c=>c.classList.toggle('active', state.chips.has(c.getAttribute('data-x'))));
+        render();
+      })
+    }
+
+    function copyInfo(nombre,marca){
+      const text = `${nombre} – ${marca}`;
+      navigator.clipboard.writeText(text).then(()=>{
+        const b = document.querySelector(`[data-id="${nombre.toLowerCase().replace(/\s+/g,'-')}"] .ghost`);
+        // feedback visual simple
+        alert('Información copiada: ' + text);
+      });
+    }
+
+    // Init
+    el('#q').addEventListener('input', e=>{state.q=e.target.value; render()});
+    el('#cat').addEventListener('change', e=>{state.cat=e.target.value; render()});
+    el('#sort').addEventListener('change', e=>{state.sort=e.target.value; render()});
+    document.getElementById('waFoot').href = `https://wa.me/${WHATS}`;
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    buildChips();
+    render();
+  </script>
+</body>
+</html>
